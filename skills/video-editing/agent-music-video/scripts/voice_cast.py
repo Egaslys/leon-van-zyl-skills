@@ -6,7 +6,7 @@ Usage (project root, after align_lyrics.py has written analysis/lines.json):
                        [--demucs-python <python.exe>] [--keep gang] [--f-margin 0.15] [--f-min 0.45]
                        [--method embed|pitch] [--write]
 
-Why embeddings, and why male-by-default (the Track 02 "MOD IT!" failure): the old pitch method tagged ~24 of 57 sung lines
+Why embeddings, and why male-by-default (learned on an earlier song): the old pitch method tagged ~24 of 57 sung lines
 female, the user heard most of them as the MALE singer. A man singing a melody sits at ~200–330 Hz, right inside a female
 range, so pitch cannot tell them apart (the 57.56 s line "You don't need a toolbox, boss…" is male at ~247 Hz). A speaker-
 recognition model (SpeechBrain ECAPA-TDNN, speechbrain/spkrec-ecapa-voxceleb) compares the voice's timbre instead, and it
@@ -15,12 +15,13 @@ matched the female reference. Generated songs often have the female voice only i
 NOT force a 2-cluster split: every line is MALE unless the female reference clearly wins.
 
 1. Separates the vocals with Demucs (htdemucs, two stems) unless --vocals is given (the full mix is useless for this).
-   Demucs + SpeechBrain need torch: keep them in their own venv (the script re-runs itself in it automatically):
-     python -m venv %LOCALAPPDATA%/agent-music-video/demucs-venv
-     <venv>/Scripts/python -m pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+   Demucs + SpeechBrain need torch: keep them in their own venv (the script re-runs itself in it automatically). The app
+   folder is %LOCALAPPDATA%/agent-music-video on Windows, ~/.local/share/agent-music-video elsewhere:
+     python -m venv <app folder>/demucs-venv
+     <venv>/Scripts/python -m pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu   (bin/python off Windows)
      <venv>/Scripts/python -m pip install demucs soundfile librosa speechbrain
    CPU is fine (Demucs ~1–3 min per song; embeddings ~1 min). The ECAPA model (~80 MB) downloads once to
-   %LOCALAPPDATA%/agent-music-video/models/.
+   <app folder>/models/.
 2. Anchors: each --male / --female span is embedded in ~2 s chunks → one centroid PER SPAN. Give several male spans that cover
    the male voice's different modes (spoken intro, rap verse, sung melody) — a voice's spoken and sung embeddings can be as far
    apart as two different people, so the male score is the BEST match over the male spans, not a single average.
@@ -57,8 +58,8 @@ ref_f, ref_m = spans(opt("--female", multi=True)), spans(opt("--male", multi=Tru
 keep = set(x for x in opt("--keep", "gang").split(",") if x)
 F_MARGIN, F_MIN = float(opt("--f-margin", 0.15)), float(opt("--f-min", 0.45))
 method = opt("--method", "embed")
-APPDIR = os.path.join(os.environ.get("LOCALAPPDATA", ""), "agent-music-video")
-venv_py = os.path.join(APPDIR, "demucs-venv", "Scripts", "python.exe")
+APPDIR = os.path.join(os.environ.get("LOCALAPPDATA") or os.path.join(os.path.expanduser("~"), ".local", "share"), "agent-music-video")
+venv_py = os.path.join(APPDIR, "demucs-venv", *(("Scripts", "python.exe") if os.name == "nt" else ("bin", "python")))
 dpy = opt("--demucs-python", venv_py if os.path.exists(venv_py) else sys.executable)
 
 def has_speechbrain():

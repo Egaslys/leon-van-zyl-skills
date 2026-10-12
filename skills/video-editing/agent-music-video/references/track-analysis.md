@@ -18,7 +18,7 @@ Everything downstream is timed from these files. Do them once, carefully.
    (review the table) then the same with `--write`. Generated tracks often mix a male and a female voice (a spoken hook, a duet
    line, ad-libs). The script separates the vocals with Demucs (own venv, CPU is fine) and compares each line's **speaker
    embedding** (SpeechBrain ECAPA) with the reference spans; it is male unless the female reference clearly wins, and writes
-   `voice: "m" | "f" | "duet" | "?"` (keeps "gang"). **Don't cast by pitch**: on "MOD IT!" pitch tagged 24 high male melody lines
+   `voice: "m" | "f" | "duet" | "?"` (keeps "gang"). **Don't cast by pitch**: on one song pitch tagged 24 high male melody lines
    (~250–330 Hz) female and the user heard the wrong character singing all over the video. Give several male spans (spoken, rap,
    sung) and every span the user confirms; spot-check its LOW-CONFIDENCE list by ear. The rule this feeds: **the character
    lip-syncing on screen must match the voice** (male AGENT for male lines, the female AGENT `KIT.femme` for female lines, both for duets).

@@ -324,7 +324,7 @@
      KIT.outfit(id, { hat, eyes, neck, torso, back }, { name, color })   compose parts (names below or raw SVG strings)
      KIT.outfitSwap(tl, id, name, at)   pop a new outfit on at `at` (set + to, seek-safe; build-time markup, no clocks)
      Call after the mascot is in the DOM (any time; before or after KIT.femme). Pure markup layered INTO the rig, so
-     it moves with the head/body. Identity markers never change: the outfit sits under the MoE badge (torso layers are
+     it moves with the head/body. Identity markers never change: the outfit sits under the chest badge (torso layers are
      drawn behind it), the shirt colour stays visible (AGENT blue / her pink), her antenna bow and the bulb stay on top
      of any hat, and eyewear is translucent so the LED face stays readable. Parts:
        hat:   capBack (backwards cap) · goggles (pushed up) · headset (+ mic) · crown (tilted) · partyHat (tilted)

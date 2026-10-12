@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DON'T SAY A.I. — 3D kit (ES module). Import from a frame's module script:
+   agent-music-video — 3D kit (ES module). Import from a frame's module script:
      import * as K3 from "./assets/kit/kit3d.js";
      const { THREE } = K3;
    Look: neobrutalist toon — flat pastel faces, one darker side tone, thick

@@ -22,7 +22,7 @@ Note: `setup_project.mjs` refreshes the kit's own files (kit.css/js, kit3d.js, g
 ## Build the reference frame(s) yourself first
 Before delegating, build the opening frame (and ideally the title) to the full bar. It proves the pipeline
 (fonts, paths, kit, 3D) and gives directors a concrete example of the house style — they match what they see.
-Examples from the reference project: `assets/examples/01-intro.html` (dark-room character intro, evidence
+Examples from the worked example: `assets/examples/01-intro.html` (dark-room character intro, evidence
 board of receipts, lip-sync, glitch, censor gag), `02-title.html` (3D title with letter swap),
 `07-chant1.html` (3D Clawd dance break), `14-sat-sun.html` (receipts + 3D lever + Clawd stage).
 
@@ -36,18 +36,18 @@ board of receipts, lip-sync, glitch, censor gag), `02-title.html` (3D title with
   durations), `npx hyperframes render . -c preview.html -o renders/preview.mp4 --fps 30`, mux the master audio, send it. Delete the temp file after (two root compositions = lint error).
 
 ## Rendering
-**Speed + safety for the final master (Track 02 lessons, test these first next time):**
-- **The final master is always 4K 60 fps** (locked by the user). Measured on the RTX 5090 with the GPU free (Track 02): 4K60 capture
+**Speed + safety for the final master (measured on earlier videos; test these first on a new machine):**
+- **The final master is 4K 60 fps by default.** Measured on an RTX 5090 (32 GB) with the GPU free: 4K60 capture
   plateaus at 8 workers (~20.8 fps on a 3D intro clip; 8, 12 and 16 identical; VRAM 8.5–13.5 GB); a full 3D-heavy timeline runs at
-  ~0.23× the clip rate (≈ 4.8 fps → ~66 min for 4:50). Use `-w 12`.
+  ~0.23× the clip rate (≈ 4.8 fps → ~66 min for a 4:50 song). Use `-w 12` on that class of machine.
 - Benchmark before the big render: `npx hyperframes benchmark .` finds the fastest worker count on this machine. The docs call
-  ~4 workers "usually the sweet spot"; Track 02's 4K60 render at `-w 16` ran at only ~2–2.6 frames/s (≈ 2 h for 17,422 frames)
+  ~4 workers "usually the sweet spot"; a 4K60 render at `-w 16` once ran at only ~2–2.6 frames/s (≈ 2 h for 17,422 frames)
   with GPU memory at 31/32 GB and compute at 37%: the workers were likely contending for VRAM, so more workers was slower.
 - Make long renders restart-proof: set `HF_SEGMENTED_CAPTURE=true` (and `--resume` after an interruption) so finished segments are
-  kept; Track 02 lost a whole 4K render to a PC restart. Keep a `renders/final/PROGRESS.txt` step log for the delivery job.
+  kept; a PC restart once cost a whole 4K render. Keep a `renders/final/PROGRESS.txt` step log for the delivery job.
 - `--resolution` only scales the 1080p layout by whole numbers (1080p or 4K; 1440p is not possible). When time matters: 4K30 halves the
-  frames, 1080p60 is ~4× faster than 4K60. Check GPU memory first (`nvidia-smi`): in Track 02 another app held 23 GB of the 32 GB VRAM.
-- Render the heavy master ONCE: critic rounds use 1080p30 drafts. Heavy 3D roughly doubles render time (Track 02 drafts: 5 → 11 min).
+  frames, 1080p60 is ~4× faster than 4K60. Check GPU memory first (`nvidia-smi`): another app once held 23 GB of the 32 GB VRAM.
+- Render the heavy master ONCE: critic rounds use 1080p30 drafts. Heavy 3D roughly doubles render time (drafts went 5 → 11 min).
 
 Drafts and critic rounds: 1080p (fast). **Final upload master: 4K** (see delivery.md).
 `npx hyperframes render . -q delivery --crf 12 --fps 60 -w 12 -o renders/vN-raw.mp4`

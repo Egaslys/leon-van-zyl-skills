@@ -15,16 +15,16 @@ HTML/SVG/text is re-rasterised natively sharp (no upscaling). Worth it: YouTube 
 VP9/AV1 encodes, which look better even for 1080p viewers.
 ```bash
 HF_SEGMENTED_CAPTURE=true npx hyperframes@<pinned> render . --resolution landscape-4k -q delivery --crf 12 --fps 60 -w 12 -o renders/final-4k-raw.mp4
-# 4K 60 fps is locked (the user's choice). Before it: free the GPU (nvidia-smi: another app holding VRAM made Track 02's first
-# attempt crawl at ~2 fps); 8–12 workers is the plateau on the RTX 5090 (≈ 4.8 fps on a full 3D-heavy timeline ≈ 66 min for 4:50);
-# add --resume after any interruption.
+# 4K 60 fps is the default master. Before it: free the GPU (nvidia-smi: another app holding VRAM once made a 4K60 render
+# crawl at ~2 fps); 8–12 workers was the plateau on an RTX 5090 (≈ 4.8 fps on a full 3D-heavy timeline ≈ 66 min for 4:50);
+# run `npx hyperframes benchmark .` on other machines. Add --resume after any interruption.
 ```
 - **Restart-proof:** with `HF_SEGMENTED_CAPTURE=true` finished segments are kept in `renders/.hf-segments/<hash>/`; rerun the SAME
-  command + `--resume` after a crash/restart and only the missing segments render. Track 02: the NVIDIA driver reset mid-render
+  command + `--resume` after a crash/restart and only the missing segments render. Once the NVIDIA driver reset mid-render
   (Windows System log `nvlddmkm` event 153, a GPU timeout/TDR → "Page.captureScreenshot: Unable to capture screenshot"); 4 of 6
   segments survived and `--resume` redid the other two. If a reset repeats, resume at `-w 8` (no speed loss vs 12 on the 5090).
 - Log every delivery step to `renders/final/PROGRESS.txt` (step · DONE/FAILED · time) so an interrupted session resumes from the log.
-- Measured (Track 02, 4:50, 3D-heavy, GPU free, segmented, `-w 12`): ≈ 13 fps ≈ 22 min of capture for 17,422 frames; the same render
+- Measured (RTX 5090 + 32 threads, a 4:50 3D-heavy song, GPU free, segmented, `-w 12`): ≈ 13 fps ≈ 22 min of capture for 17,422 frames; the same render
   with another app holding 23 GB of VRAM crawled at ~2 fps (≈ 2 h). Check `nvidia-smi` first.
 - The kit is 4K-ready: `kit3d.setup()` follows `devicePixelRatio` (3D drawn at full res), `KIT.receipt` swaps in the
   `@2x` screenshots, logos/fonts/mascots are vector. Check any custom canvas/raster image a director added (it must
@@ -37,7 +37,7 @@ HF_SEGMENTED_CAPTURE=true npx hyperframes@<pinned> render . --resolution landsca
 ## Deliverables (`renders/final/`)
 | File | How |
 |---|---|
-| `<Title>_4K60_YouTube.mp4` | THE upload: final 4K 60 fps render (CRF 12; locked by the user) + mastered AAC 320k, faststart |
+| `<Title>_4K60_YouTube.mp4` | THE upload: final 4K 60 fps render (CRF 12; the default master) + mastered AAC 320k, faststart |
 | `<Title>_1080p60.mp4` | downscaled copy: the critic's regression check + platforms where 4K is overkill |
 | `<Title>_preview720.mp4` | phone copy < 30 MB so it reaches the user's phone/web app: `-vf scale=1280:720,fps=30 -c:v h264_nvenc -b:v 900k -maxrate 1500k -c:a aac -b:a 96k` (use libx264 if no NVENC) |
 | `<Title>.en.srt` | `python <skill>/scripts/make_srt.py assets/kit/song.js renders/final/<Title>.en.srt` (all lines incl. choruses) |
@@ -54,8 +54,8 @@ At delivery:
    tears, smug — is the channel's signature); a bold 1–3-word sticker word; high contrast; little clutter; no caption
    bar; no tiny text; the emotion is readable in half a second. Busy frames lose even if they're the funniest gag.
    **Every thumbnail must contain something instantly recognisable**: a known brand mascot (3D Clawd), a product
-   logo, or the AGENT host's face. People scan the feed for familiar characters; Track 02's fuzzy-dice and rm -rf
-   picks had nothing familiar and the user rejected them, while the one with Clawd on the car won.
+   logo, or the AGENT host's face. People scan the feed for familiar characters; picks of fuzzy dice and an `rm -rf`
+   gag had nothing familiar and were rejected, while the one with Clawd on a car won.
 3. **Complement, don't repeat, the title**: the thumbnail shows the emotion/twist, the title tells the story (e.g. title
    "Don't Say A.I. (Or You're the Enemy)" + the shocked host under a giant "SHH!").
 4. **Pick 3 different flavours** — e.g. the hook/emotion shot, the brand lockup (title card), the drama shot — so the user can
@@ -63,15 +63,15 @@ At delivery:
 5. **Export clean**: `python <skill>/scripts/clean_stills.py renders/final 55.45:shh@80,30,1720,967 15.35:title 112.95:oh-no`
    (hides the caption overlay, renders exact full-res frames, crops 16:9 to drop edge clutter / push in, writes 1280×720 JPEGs).
    Try 2–3 times ±0.2 s around each moment to catch the peak expression; LOOK at the exports.
-6. **Thumbnail review + staging pause (the user's rule, before calling the package done).** Put the exports side by
+6. **Thumbnail review + staging pause (before calling the package done).** Put the exports side by
    side at full size and at ~320 px wide on both a white and a dark background (YouTube light/dark mode), and fix
    what doesn't read with STILL-ONLY staging that never touches the video:
    `clean_stills.py … --css "<rules>"` temporarily injects CSS into the frames for the export and restores every file
-   byte-for-byte (verify hashes). Typical fixes: swap a background colour for contrast (Track 02: orange Clawd vanished
+   byte-for-byte (verify hashes). Typical fixes: swap a background colour for contrast (e.g. an orange Clawd vanished
    on an orange downbeat ground → the title's own pale cyan), add a thick white sticker outline to the 3D title and
    mascot (stacked `drop-shadow(±6px 0 0 #fff)` filters on the 3D canvas), a slight saturation boost, nudge or hide a
-   clashing element, or stage in a recognisable character/logo (`CAR.clawd2d`, `assets/logos/*.svg`, the host's face).
-   Keep everything on-model and true to the video: the user preferred our accurate pale-cyan still over an
+   clashing element, or stage in a recognisable character/logo (a 2D mascot from `assets/props.js`, `assets/logos/*.svg`,
+   the host's face). Keep everything on-model and true to the video: an accurate pale-cyan still was preferred over an
    AI-regenerated dark-blue redraw that had more pop but off-model letters, characters and text. Borrow ideas (white
    outlines, saturation) from such redraws, not their pixels.
 7. List them in `social-metadata.md` with the title each pairs best with, and show them to the user.
@@ -79,9 +79,9 @@ At delivery:
 ## Social metadata (`renders/final/social-metadata.md`) — write it after the final cut exists
 Also paste the description and the tag list into your reply so the user can copy them straight away.
 
-**Channel framing (the user's rule):** every video on the channel is AI news, so titles must NOT say it's
-"a song", "a music video" or "about AI". Each video is the week's news roundup; the title leads with the
-**funny angle of one story** (often the song's hook).
+**Channel framing:** titles must NOT announce the format ("a song", "a music video") or the channel's own topic
+(on a channel that is all AI news, "about AI" says nothing). The title leads with the **funny angle of one story**
+(often the song's hook). The workspace AGENTS.md may add the channel's own title rules or series shape.
 
 **Titles — give 5 recommendations**, each:
 - under 60 characters (show the count);
@@ -93,7 +93,7 @@ Also paste the description and the tag list into your reply so the user can copy
 Mix angles: the hook, a superlative + hook, a second story's gag, a roundup ("Le Chonk, Fake Tips & More"),
 a character/mascot line. Star your pick and suggest an A/B pair. For a recurring series, keep one shape
 (e.g. "The Wildest Week Yet: <hook>") so viewers recognise it.
-Example set (week of Oct 5–11, 2026): "Don't Say A.I. (Or You're the Enemy)" · "The Wildest Week Yet: Don't Say A.I." ·
+Example set (the worked example in `assets/examples/`, a week of AI news, Oct 5–11, 2026): "Don't Say A.I. (Or You're the Enemy)" · "The Wildest Week Yet: Don't Say A.I." ·
 "Saying "AI" Makes You the Enemy Now" · "The Craziest Week Yet: Le Chonk, Fake Tips & More" · "Be Nice to Claude. It's the Rule Now."
 
 **Description**, in this order:
@@ -110,11 +110,12 @@ Example set (week of Oct 5–11, 2026): "Don't Say A.I. (Or You're the Enemy)" �
   (e.g. "Reminder: it's S.I. now 🤫 Anyone who says "AI" in the replies gets reported to the boss. 🤖" — people
   reply just to break the rule), else a pick-one poll of 3–4 stories with emoji, or "which line is stuck in your head?" + a quoted lyric;
 - "Every headline is real (sources in the description)" — no links needed, the description has them;
-- end by asking which AI story/launch should get the next song (it feeds the next episode);
+- end by asking which story/launch should get the next song (it feeds the next episode);
 - no begging for likes/subs, no clickbait, provider-neutral. Pin it as soon as the video is live and answer
   early replies in AGENT's voice.
 
-**Tags** — one comma-separated line, ≤ 500 characters total (count it): broad → specific: "AI news, AI news
+**Tags** — one comma-separated line, ≤ 500 characters total including any tags the channel's upload defaults add
+(count it; the workspace AGENTS.md lists them): broad → specific, e.g. for a news song "AI news, AI news
 this week, weekly AI news, AI news roundup", the hook phrase, companies, products/models, mascots/characters,
 themes (agentic coding, AI agents…), "<Month> <Year>".
 

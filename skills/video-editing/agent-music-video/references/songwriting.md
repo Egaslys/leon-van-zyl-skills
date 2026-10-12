@@ -3,7 +3,7 @@
 The lyrics carry the story; the video only amplifies them. A video can't rescue a song with no hook.
 
 ## Shape
-- **Narrator with a voice.** A character telling the story (the reference project: a nervous little AI agent
+- **Narrator with a voice.** A character telling the story (the worked example: a nervous little AI agent
   recapping the week to its "boss") gives you jokes, emotion and a natural music-video protagonist.
 - **A spine.** Something that orders the verses: days of the week, a countdown, a journey, before/after.
 - **A running gag that becomes the hook.** One absurd fact or catchphrase, sung in the chorus and paid off
@@ -13,9 +13,9 @@ The lyrics carry the story; the video only amplifies them. A video can't rescue 
 - **Humour from specifics**: real numbers and names in absurd framings ("ten cents a million — cheapest poet
   of all time"). Puns on product names. Self-aware lines ("Suno sings the melody — wait… that's us?").
 - **Explainers (a feature or tool):** teach the 3–4 things a viewer needs (what it is, how to get it, the best real uses, the
-  caveat), give the abstract idea a physical metaphor the video can build on (Track 02: Claude Code = a car, each mod = a part:
-  brakes, gauges, tint, launch codes), lead with the useful examples people actually built and give toys one contrast line,
-  and end the bridge on the honest caveat (Track 02: "no sandbox… read it 'fore you run it").
+  caveat), give the abstract idea a physical metaphor the video can build on (e.g. a song about Claude Code's add-on mods: Claude
+  Code = a car, each mod = a part: brakes, gauges, tint, launch codes), lead with the useful examples people actually built
+  and give toys one contrast line, and end the bridge on the honest caveat (that song: "no sandbox… read it 'fore you run it").
 - **Facts stay true.** Rounding for rhyme is OK ("fifty billion, not seventy" for ~$50B vs ~$68B) but note it
   in the fact key and label it on screen ("≈70 in the song").
 

@@ -1,6 +1,6 @@
 # Phase 6 — Long-lived agents build the video; the critic loop polishes it
 
-**Both parts are mandatory every time the skill runs (the user's standing rule).** The main thread is the
+**Both parts are mandatory every time the skill builds a video.** The main thread is the
 orchestrator: it plans, builds the shared kit/reference frame, assembles, renders, masters and coordinates — it does
 NOT build the whole video alone. And no video is delivered until the critic has scored it ≥ 8/10.
 
@@ -18,14 +18,14 @@ wastes time and usage and loses context. Scale the team, but never to zero:
 
 The orchestrator still builds the **opening/reference frame** (it proves the pipeline and sets the house style)
 plus captions, assembly, audio and packaging — everything else goes to the agents. If one agent's load is much
-heavier, move a frame to a lighter one (in the reference project the chant moved from the hooks director to the
-bridge/outro director in round 2 — and became the user's favourite part).
+heavier, move a frame to a lighter one (once, a chant moved from the hooks director to the bridge/outro director in
+round 2 — and became the favourite part of the video).
 
-**Before the first brief (the costliest lesson of Track 02):** put the measurable bar into the brief up front: the gold
-standard's numbers (3D in ≥ 60% of frames and every chorus, a camera move per phrase, cuts/min per section; `visual-direction.md` §5),
-the per-line singer from `voice_cast.py` (voiceprints, male by default), the standalone rule and the character colours. Track 02
-briefed without them, and after v2 every one of 16 frames had to be rebuilt (energy) and recast (twice). Front-loading these is
-the single biggest time saver.
+**Before the first brief (the costliest lesson so far):** put the measurable bar into the brief up front: the energy
+bar's table (3D in ≥ 60% of frames and every chorus, a camera move per phrase, cuts/min per section; `visual-direction.md` §5)
+plus its "what the best video did" list, the per-line singer from `voice_cast.py` (voiceprints, male by default), the
+standalone rule and the character colours. A 16-frame video briefed without them had every frame rebuilt (energy) and
+recast (twice) after its second version. Front-loading these is the single biggest time saver.
 
 Dispatch with the Agent tool (general-purpose), `run_in_background: true`, all at once. Each brief:
 role + frames owned (ids + durations) · read DIRECTOR-GUIDE.md, STORYBOARD.md, the reference frame, the kit
@@ -51,7 +51,7 @@ It writes `analysis/critic-round-<N>.md` (scores, top fixes, findings per frame/
 
 **Below 8/10 is not acceptable.** The orchestrator's job is to turn the critic's feedback into fixes until the score
 is ≥ 8, for at most **5 rounds**:
-0. Freeze frame edits while the critic reviews a render (it scores what was rendered; Track 02's critic flagged that ten frames
+0. Freeze frame edits while the critic reviews a render (it scores what was rendered; one critic flagged that ten frames
    changed under it). While it reviews, directors may pre-fix gaps you already MEASURED (e.g. a low cuts/min section), then re-render.
 1. Verify surprising claims yourself before acting (pull the exact frame — critics misread too; in round 1 two
    "missing" effects were actually present).

@@ -28,7 +28,7 @@ source URLs — it becomes the YouTube description's source list and the critic'
 
 ## Pick the top 5–10 for a song
 Favour stories that are (a) genuinely important, (b) visual or funny, (c) easy to say in a line. One absurd
-story can become the **running gag/hook** (in the reference project: "say 'AI' and you're THE ENEMY" → "Don't Say A.I.").
+story can become the **running gag/hook** (in the worked example: "say 'AI' and you're THE ENEMY" → "Don't Say A.I.").
 
 ## Receipts (capture during or right after research)
 For every story in the song, capture the real page with `scripts/shoot.mjs` — screenshot + rects of the
