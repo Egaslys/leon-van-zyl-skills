@@ -36,7 +36,7 @@ SAME agent with SendMessage (it keeps its context). Relay user feedback mid-flig
 (e.g. "the user loves the dancing Clawd — give him real dance moments").
 While they work: captions, audio master, upload copy, previews for the user.
 
-## 2. The critic loop — runs on the finished video, up to 5 rounds, pass mark 8/10
+## 2. The critic loop — runs on the finished video, up to 3 rounds, pass mark 8/10
 Once the full video is assembled and rendered (not per section, not on the plan), spawn ONE long-lived **critic
 agent** briefed from `assets/templates/CRITIC-BRIEF.md` (paste the user's actual asks). Give it the MP4, labelled
 review sheets (`scripts/review_sheets.py`), `STORYBOARD.md`, `lyrics.md`, `words.mjs` and ffprobe/ebur128.
@@ -50,7 +50,7 @@ It scores the video out of 10 and judges, at professional-YouTube-music-video st
 It writes `analysis/critic-round-<N>.md` (scores, top fixes, findings per frame/owner, what to keep).
 
 **Below 8/10 is not acceptable.** The orchestrator's job is to turn the critic's feedback into fixes until the score
-is ≥ 8, for at most **5 rounds**:
+is ≥ 8, for at most **3 rounds** (the cap saves time and usage):
 0. Freeze frame edits while the critic reviews a render (it scores what was rendered; one critic flagged that ten frames
    changed under it). While it reviews, directors may pre-fix gaps you already MEASURED (e.g. a low cuts/min section), then re-render.
 1. Verify surprising claims yourself before acting (pull the exact frame — critics misread too; in round 1 two
@@ -59,7 +59,7 @@ is ≥ 8, for at most **5 rounds**:
 3. Re-render, mux the master, new review sheets, resume the SAME critic (SendMessage) with a changelog → it
    re-scores from scratch, verifies each fix and checks for regressions.
 Stop when it scores ≥ 8 (a final polish round on cheap, viewer-visible items is usually still worth it), or after
-round 5 — then tell the user the score and exactly what's still below the bar. Never present a video under 8 as finished.
+round 3 — then tell the user the score and exactly what's still below the bar. Never present a video under 8 as finished.
 Typical arc: 7.5 → 8.4 → 8.8.
 
 What the critic consistently flags (pre-empt these in the storyboard and director guide):

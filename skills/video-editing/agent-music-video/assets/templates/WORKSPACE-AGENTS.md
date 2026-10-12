@@ -69,7 +69,7 @@ AGENT's chest badge reads **{{BADGE, 2–4 characters, e.g. the channel's initia
 <!-- The skill's defaults are listed below; edit them to match your own preferences. -->
 - **Bar:** professional, energetic, funny, story-driven; every line synced to the vocal; real screenshot "receipts" for every claim; nothing invented.
 - **Standalone videos:** no episode/track numbers, video-title labels or release dates on screen (title card, pills, receipt tags, end card) unless the story itself needs them. Track numbers below are internal bookkeeping only.
-- **Agents (every video):** the main thread orchestrates; a few long-lived domain agents do the building (1 builder for a Short, 3–4 section directors for a full song) and stay alive for fixes. Then a **critic agent** scores the finished video out of 10 in a loop of **up to 5 rounds**; below 8 is not acceptable.
+- **Agents (every video):** the main thread orchestrates; a few long-lived domain agents do the building (1 builder for a Short, 3–4 section directors for a full song) and stay alive for fixes. Then a **critic agent** scores the finished video out of 10 in a loop of **up to 3 rounds**; below 8 is not acceptable.
 - **Flow:** when the user says "keep going", stop asking questions and use judgement. Send early previews (live Studio, short clips, phone copies < 30 MB).
 - **Hardware:** {{GPU + CPU threads, e.g. "RTX 5090 + 32 threads — GPU WebGL capture, many render workers, NVENC for previews"}}
 - **Final master:** 4K 60 fps.

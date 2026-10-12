@@ -27,10 +27,10 @@ These two apply whenever the skill builds a video — the user expects them in p
    do the whole edit yourself, and never fan out into many small single-task agents (it wastes time and usage).
    Protect your own context: one more long-lived **production agent** takes the output-heavy chores (receipts and CLI
    captures, renders, review sheets, phone copies, cut-density measurements, the delivery package); you keep conclusions.
-2. **A critic agent scores the finished video out of 10 in a loop of up to 5 rounds.** Below 8 is not acceptable.
+2. **A critic agent scores the finished video out of 10 in a loop of up to 3 rounds.** Below 8 is not acceptable.
    It checks fidelity to the lyrics and script, the song's theme and hook, energy, animation quality and polish —
    the bar is a professional YouTube music video. You turn its feedback into fixes (via the same long-lived agents),
-   re-render, and resume the same critic until it scores ≥ 8. Don't call a video finished before that; if round 5
+   re-render, and resume the same critic until it scores ≥ 8. Don't call a video finished before that; if round 3
    still misses, tell the user the score and what's left. Details: `references/directors-and-critic.md`.
 
 ## 1. Find the entry point (don't re-do what exists)
@@ -64,7 +64,7 @@ Defaults — state them, don't ask: author 16:9 at 1920×1080, 60 fps; drafts at
 (don't downgrade it to save time; make the render fast instead, see `references/production.md` › Rendering)
 (`--resolution landscape-4k`; 9:16 for Shorts/Reels/TikTok); video length =
 the track; the look chosen to fit the song; captions on verses, none on choruses; royalty-free fonts only;
-use the GPU and many render workers; the critic loop on the finished video (≥ 8/10, up to 5 rounds). Ask at most one or two
+use the GPU and many render workers; the critic loop on the finished video (≥ 8/10, up to 3 rounds). Ask at most one or two
 questions, and only when the input is genuinely missing (e.g. no topic). When the user says "keep going",
 stop asking and use judgement.
 
@@ -113,7 +113,7 @@ For songs over ~1 minute, a few long-lived section directors in parallel (verses
 briefed with `assets/templates/DIRECTOR-GUIDE.md` + specific creative direction; relay user feedback to them
 mid-flight. Everyone logs **thumbnail-worthy moments** as they build (`analysis/thumbnail-moments.md`).
 Render, mux the master, build review sheets, then the critic (`assets/templates/CRITIC-BRIEF.md`)
-— only once the full video exists; fix → re-render → resume the same critic; ≥ 8/10, up to 5 rounds. Measure every
+— only once the full video exists; fix → re-render → resume the same critic; ≥ 8/10, up to 3 rounds. Measure every
 render's **3D coverage, camera moves and cuts/min per section** against the energy bar (hooks ≥ 45 cuts/min, the breakdown
 and final chorus the densest) → `references/directors-and-critic.md`, `references/visual-direction.md` §5
 

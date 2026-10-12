@@ -18,7 +18,7 @@ the source of the energy bar in `visual-direction.md` §5) and a 4:50 explainer 
   truth: seed the casting with any line they identify and show them the low-confidence lines. Characters: AGENT blue, her pink.
 - **Explainer songs: lean on the useful examples.** For a feature explainer, show "the helpful, anti-useless examples" people
   actually built; toys get one line of contrast. Never put creators'/influencers' names on screen (crop X cards to the post body).
-- **Process:** don't stop to ask once the user says "keep going"; long-lived agents do the building (never the main thread alone, never swarms of tiny agents); the critic loop runs on the finished video, up to 5 rounds, ≥ 8/10 (below 8 is not acceptable); use the GPU; royalty-free fonts only.
+- **Process:** don't stop to ask once the user says "keep going"; long-lived agents do the building (never the main thread alone, never swarms of tiny agents); the critic loop runs on the finished video, up to 3 rounds, ≥ 8/10 (below 8 is not acceptable); use the GPU; royalty-free fonts only.
 
 ## Packaging
 - Titles must not announce the format ("song", "music video") or the channel's own topic (on an all-AI-news channel, "about AI" says nothing). Lead with the funniest true angle of one story; follow the title rules in delivery.md (< 60 chars, simple words, superlatives, no clickbait). A first draft ("…AI News Song Ever") was rejected for being on the nose.
